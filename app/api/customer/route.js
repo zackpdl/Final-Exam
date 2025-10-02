@@ -28,12 +28,20 @@ export async function POST(request) {
       return new Response("Member number already exists", { status: 400 });
     }
     
-    const customer = new Customer(body);
+    // Ensure dateOfBirth is properly formatted
+    const customerData = {
+      name: body.name,
+      dateOfBirth: new Date(body.dateOfBirth),
+      memberNumber: body.memberNumber,
+      interests: body.interests
+    };
+    
+    const customer = new Customer(customerData);
     await customer.save();
     return Response.json(customer, { status: 201 });
   } catch (error) {
     console.error("Error creating customer:", error);
-    return new Response("Internal Server Error", { status: 500 });
+    return new Response(`Internal Server Error: ${error.message}`, { status: 500 });
   }
 }
 

@@ -99,7 +99,7 @@ export default function CustomerPage() {
       const customerData = {
         ...formData,
         memberNumber: parseInt(formData.memberNumber),
-        dateOfBirth: new Date(formData.dateOfBirth)
+        dateOfBirth: formData.dateOfBirth // Keep as string, let the API handle the conversion
       };
 
       let response;
